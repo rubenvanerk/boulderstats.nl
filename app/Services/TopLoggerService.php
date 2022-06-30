@@ -19,6 +19,7 @@ class TopLoggerService
             'gym_resources',
             function () {
                 $gyms = $this->topLogger->gyms()->filter(['live' => true])->include(['gym_resources'])->all();
+
                 return collect($gyms)
                     ->map(fn ($object) => (array) $object)
                     ->values();

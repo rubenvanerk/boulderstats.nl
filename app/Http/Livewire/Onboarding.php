@@ -10,8 +10,11 @@ use Livewire\Component;
 class Onboarding extends Component
 {
     public Collection $gyms;
+
     public $gymId;
+
     public Collection $users;
+
     public $userId;
 
     protected TopLoggerService $topLoggerService;

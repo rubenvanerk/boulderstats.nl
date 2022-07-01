@@ -2,8 +2,6 @@
 
 namespace App\Http\Livewire;
 
-use App\DataTransferObjects\GymFactory;
-use App\DataTransferObjects\User;
 use App\DataTransferObjects\UserFactory;
 use App\Services\TopLoggerService;
 use Illuminate\Support\Collection;
@@ -42,6 +40,7 @@ class Dashboard extends Component
     public function updateUsers(): void
     {
         $this->users = collect(Session::get('users'));
+        $this->users->map(fn ($user) => $user->stats = $this->topLoggerService->getUserStats($user));
         $this->addUser = false;
     }
 

@@ -4,6 +4,7 @@ namespace App\Services;
 
 use App\DataTransferObjects\Gym;
 use App\DataTransferObjects\User;
+use App\DataTransferObjects\UserStats;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Cache;
 use RubenVanErk\TopLoggerPhpSdk\TopLogger;
@@ -22,16 +23,14 @@ class TopLoggerService
      */
     public function getGyms(): Collection
     {
-        return Cache::rememberForever(
+        $gyms = Cache::rememberForever(
             'gym_resources',
-            function () {
-                $gyms = $this->topLogger->gyms()->filter(['live' => true])->include(['gym_resources'])->all();
-
-                return collect($gyms)
-                    ->map(fn ($object) => new Gym((array) $object))
-                    ->values();
-            }
+            fn () => $this->topLogger->gyms()->filter(['live' => true])->include(['gym_resources'])->all()
         );
+
+        return collect($gyms)
+            ->map(fn ($object) => new Gym((array) $object))
+            ->values();
     }
 
     /**
@@ -51,5 +50,15 @@ class TopLoggerService
         return collect($rankedAthletes)
             ->map(fn ($object) => new User((array) $object))
             ->values();
+    }
+
+    public function getUserStats($user): UserStats
+    {
+        $userStats = Cache::rememberForever(
+            'stats'.$user->id,
+            fn () => $this->topLogger->users()->stats($user->id)
+        );
+
+        return new UserStats((array) $userStats);
     }
 }

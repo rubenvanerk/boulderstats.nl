@@ -17,4 +17,6 @@ class User extends DataTransferObject
     public ?string $gender;
 
     public ?string $avatar;
+
+    public ?UserStats $stats;
 }

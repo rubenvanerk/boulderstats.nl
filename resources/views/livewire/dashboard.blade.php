@@ -12,10 +12,6 @@
             Add user
         </x-button>
 
-        <div>
-            @foreach($users as $user)
-                {{ $user->fullName }}<br/>
-            @endforeach
-        </div>
+        <x-stats :users="$users"/>
     @endif
 </div>

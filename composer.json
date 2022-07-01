@@ -8,7 +8,8 @@
         "livewire/livewire": "^2.10",
         "php-http/curl-client": "^2.2",
         "rubenvanerk/toplogger-php-sdk": "dev-main",
-        "spatie/data-transfer-object": "^3.8"
+        "spatie/data-transfer-object": "^3.8",
+        "spatie/laravel-google-fonts": "^1.2"
     },
     "require-dev": {
         "fakerphp/faker": "^1.9.1",

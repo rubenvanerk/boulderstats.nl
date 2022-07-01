@@ -2,12 +2,14 @@
 
 namespace App\Http\Livewire;
 
+use App\DataTransferObjects\GymFactory;
+use App\DataTransferObjects\UserFactory;
 use App\Services\TopLoggerService;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Session;
 use Livewire\Component;
 
-class Onboarding extends Component
+class AddUser extends Component
 {
     public Collection $gyms;
 
@@ -19,12 +21,12 @@ class Onboarding extends Component
 
     protected TopLoggerService $topLoggerService;
 
-    public function boot()
+    public function boot(): void
     {
         $this->topLoggerService = new TopLoggerService();
     }
 
-    public function mount()
+    public function mount(): void
     {
         $this->gyms = $this->topLoggerService
             ->getGyms()
@@ -34,21 +36,33 @@ class Onboarding extends Component
 
     public function render()
     {
-        return view('livewire.onboarding');
+        return view('livewire.add-user');
     }
 
     public function updatedGymId(): void
     {
         $this->users = $this->topLoggerService
             ->getRankedUsersByGym($this->gymId)
-            ->sortBy('full_name')
+            ->sortBy('fullName')
             ->values();
     }
 
     public function submit(): void
     {
-        Session::put('user_ids', [$this->userId]);
+        $user = $this->users->firstWhere('id', $this->userId);
 
-        $this->emit('onboarding.complete');
+        $users = Session::get('users', []);
+        $users[$user->id] = $user;
+        Session::put('users', $users);
+
+        $this->emit('userAdded');
+    }
+
+    public function hydrate(): void
+    {
+        $this->gyms = $this->gyms->map(fn ($gym) => GymFactory::make($gym));
+        if (isset($this->users)) {
+            $this->users = $this->users->map(fn ($user) => UserFactory::make($user));
+        }
     }
 }

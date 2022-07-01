@@ -9,11 +9,7 @@
     <div class="px-3 py-3 text-xs font-medium uppercase tracking-wide text-gray-500">Tops/Session</div>
 
     @foreach($users as $user)
-        <span class="text-2xl font-extrabold text-primary-600 sm:text-3xl">{{ $user->fullName }}</span>
-        <span class="text-2xl font-extrabold text-primary-600 sm:text-3xl">{{ $user->stats->grade }}</span>
-        <span class="text-2xl font-extrabold text-primary-600 sm:text-3xl">{{ $user->ascends?->count() }}</span>
-        <span class="text-2xl font-extrabold text-primary-600 sm:text-3xl">6ʙ⁺</span>
-        <span class="text-2xl font-extrabold text-primary-600 sm:text-3xl">6ʙ⁺</span>
+        <livewire:user-stats :user="$user"/>
     @endforeach
 
 </div>

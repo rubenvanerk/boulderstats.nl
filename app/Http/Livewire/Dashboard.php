@@ -40,10 +40,6 @@ class Dashboard extends Component
     public function updateUsers(): void
     {
         $this->users = collect(Session::get('users'));
-        $this->users->map(function ($user) {
-            $user->stats = $this->topLoggerService->getUserStats($user);
-            $user->ascends = $this->topLoggerService->getAscends($user);
-        });
         $this->addUser = false;
     }
 

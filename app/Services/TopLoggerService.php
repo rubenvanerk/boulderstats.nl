@@ -6,6 +6,7 @@ use App\DataTransferObjects\Ascend;
 use App\DataTransferObjects\Gym;
 use App\DataTransferObjects\User;
 use App\DataTransferObjects\UserStats;
+use Carbon\Carbon;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Cache;
 use RubenVanErk\TopLoggerPhpSdk\TopLogger;
@@ -74,6 +75,10 @@ class TopLoggerService
                 ->include(['climb'])
                 ->get()
         );
+
+        $user->stats->sessionCount = collect($ascends)
+            ->unique(fn ($ascend) => (new Carbon($ascend->date_logged))->format('Y-m-d'))
+            ->count();
 
         return collect($ascends)
             ->map(fn ($object) => new Ascend((array) $object))

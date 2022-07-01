@@ -14,6 +14,10 @@ class UserFactory
             $userAttributes['score_count'] = $userAttributes['scoreCount'];
         }
 
+        if (is_array($userAttributes['ascends'])) {
+            $userAttributes['ascends'] = collect($userAttributes['ascends']);
+        }
+
         return new User($userAttributes);
     }
 }

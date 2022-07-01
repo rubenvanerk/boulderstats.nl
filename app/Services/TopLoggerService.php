@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\DataTransferObjects\Ascend;
 use App\DataTransferObjects\Gym;
 use App\DataTransferObjects\User;
 use App\DataTransferObjects\UserStats;
@@ -52,7 +53,7 @@ class TopLoggerService
             ->values();
     }
 
-    public function getUserStats($user): UserStats
+    public function getUserStats(User $user): UserStats
     {
         $userStats = Cache::rememberForever(
             'stats'.$user->id,
@@ -60,5 +61,22 @@ class TopLoggerService
         );
 
         return new UserStats((array) $userStats);
+    }
+
+    public function getAscends(User $user): Collection
+    {
+        $ascends = Cache::rememberForever(
+            'ascends'.$user->id,
+            fn () => $this->topLogger->ascends()
+                ->filter(['used' => true])
+                ->filter(['user' => ['uid' => $user->uid]])
+                ->param(['serialize_checks' => true])
+                ->include(['climb'])
+                ->get()
+        );
+
+        return collect($ascends)
+            ->map(fn ($object) => new Ascend((array) $object))
+            ->values();
     }
 }

@@ -2,6 +2,7 @@
 
 namespace App\DataTransferObjects;
 
+use Illuminate\Support\Collection;
 use Spatie\DataTransferObject\Attributes\MapFrom;
 use Spatie\DataTransferObject\DataTransferObject;
 
@@ -18,5 +19,7 @@ class User extends DataTransferObject
 
     public ?string $avatar;
 
-    public ?UserStats $stats;
+    public ?UserStats $stats = null;
+
+    public ?Collection $ascends = null;
 }

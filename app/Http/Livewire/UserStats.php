@@ -2,15 +2,15 @@
 
 namespace App\Http\Livewire;
 
-use App\DataTransferObjects\User;
 use App\Services\TopLoggerService;
 use Livewire\Component;
+use RubenVanErk\TopLoggerPhpSdk\Requests\User\GetUserRequest;
 
 class UserStats extends Component
 {
     public bool $readyToLoad = false;
 
-    public User $user;
+    public int $userId;
 
     private TopLoggerService $topLoggerService;
 
@@ -21,12 +21,14 @@ class UserStats extends Component
 
     public function render()
     {
+        $user = (new GetUserRequest($this->userId))->send()->dto();
+
         if ($this->readyToLoad) {
-            $this->user->stats = $this->topLoggerService->getUserStats($this->user);
-            $this->user->ascends = $this->topLoggerService->getAscends($this->user);
+            $user->stats = $this->topLoggerService->getUserStats($user);
+            $user->ascends = $this->topLoggerService->getAscends($user);
         }
 
-        return view('livewire.user-stats');
+        return view('livewire.user-stats', compact('user'));
     }
 
     public function loadStats(): void

@@ -1,13 +1,14 @@
 {
     "require": {
         "php": "^8.0.2",
+        "barryvdh/laravel-debugbar": "^3.7",
         "guzzlehttp/guzzle": "^7.2",
         "laravel/framework": "^9.19",
         "laravel/sanctum": "^2.14.1",
         "laravel/tinker": "^2.7",
         "livewire/livewire": "^2.10",
         "php-http/curl-client": "^2.2",
-        "rubenvanerk/toplogger-php-sdk": "dev-main",
+        "rubenvanerk/toplogger-php-sdk": "dev-saloon",
         "spatie/data-transfer-object": "^3.8",
         "spatie/laravel-google-fonts": "^1.2"
     },
@@ -66,8 +67,11 @@
     "prefer-stable": true,
     "repositories": [
         {
-            "type": "vcs",
-            "url": "https://github.com/rubenvanerk/toplogger-php-sdk.git"
+            "type": "path",
+            "url": "../toplogger-php-sdk",
+            "options": {
+                "symlink": true
+            }
         }
     ]
 }

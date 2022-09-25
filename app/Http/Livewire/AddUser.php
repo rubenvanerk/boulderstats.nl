@@ -2,12 +2,14 @@
 
 namespace App\Http\Livewire;
 
-use App\DataTransferObjects\GymFactory;
-use App\DataTransferObjects\UserFactory;
 use App\Services\TopLoggerService;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Session;
 use Livewire\Component;
+use RubenVanErk\TopLoggerPhpSdk\Data\Gym;
+use RubenVanErk\TopLoggerPhpSdk\Data\User;
+use RubenVanErk\TopLoggerPhpSdk\Requests\Gym\ListGymsRequest;
+use RubenVanErk\TopLoggerPhpSdk\Requests\Gym\ListRankedUsersRequest;
 
 class AddUser extends Component
 {
@@ -49,20 +51,27 @@ class AddUser extends Component
 
     public function submit(): void
     {
-        $user = $this->users->firstWhere('id', $this->userId);
-
-        $users = Session::get('users', []);
-        $users[$user->id] = $user;
-        Session::put('users', $users);
+        $users = Session::get('userIds', []);
+        if (!in_array($this->userId, $users, true)) {
+            $users[] = $this->userId;
+        }
+        Session::put('userIds', $users);
 
         $this->emit('userAdded');
     }
 
     public function hydrate(): void
     {
-        $this->gyms = $this->gyms->map(fn ($gym) => GymFactory::make($gym));
+        $this->gyms = $this->gyms->map(function (array $gym): Gym {
+            $gym['id_name'] = $gym['idName'];
+            return new Gym($gym);
+        });
+
         if (isset($this->users)) {
-            $this->users = $this->users->map(fn ($user) => UserFactory::make($user));
+            $this->users = $this->users->map(function (array $user): User {
+                $user['full_name'] = $user['fullName'];
+                return new User($user);
+            });
         }
     }
 }

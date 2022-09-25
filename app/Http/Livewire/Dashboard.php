@@ -2,15 +2,13 @@
 
 namespace App\Http\Livewire;
 
-use App\DataTransferObjects\UserFactory;
 use App\Services\TopLoggerService;
-use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Session;
 use Livewire\Component;
 
 class Dashboard extends Component
 {
-    public ?Collection $users;
+    public ?array $userIds;
 
     public $stats;
 
@@ -39,14 +37,7 @@ class Dashboard extends Component
 
     public function updateUsers(): void
     {
-        $this->users = collect(Session::get('users'));
+        $this->userIds = Session::get('userIds', []);
         $this->addUser = false;
-    }
-
-    public function hydrate(): void
-    {
-        if (isset($this->users)) {
-            $this->users = $this->users->map(fn ($user) => UserFactory::make($user));
-        }
     }
 }

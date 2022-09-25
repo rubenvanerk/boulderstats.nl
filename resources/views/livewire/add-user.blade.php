@@ -1,5 +1,5 @@
 <div>
-    <div class="w-full space-y-5">
+    <div class="w-full space-y-5 mt-5">
         <div>
             <x-label>Select a gym</x-label>
             <select wire:model="gymId" class="w-full">

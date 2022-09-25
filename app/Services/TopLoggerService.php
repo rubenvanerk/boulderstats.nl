@@ -2,37 +2,29 @@
 
 namespace App\Services;
 
-use App\DataTransferObjects\Ascend;
-use App\DataTransferObjects\Gym;
-use App\DataTransferObjects\User;
-use App\DataTransferObjects\UserStats;
 use Carbon\Carbon;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Cache;
-use RubenVanErk\TopLoggerPhpSdk\TopLogger;
+use RubenVanErk\TopLoggerPhpSdk\Data\Ascend;
+use RubenVanErk\TopLoggerPhpSdk\Data\Gym;
+use RubenVanErk\TopLoggerPhpSdk\Data\User;
+use RubenVanErk\TopLoggerPhpSdk\Data\UserStats;
+use RubenVanErk\TopLoggerPhpSdk\Requests\Ascend\ListAscends;
+use RubenVanErk\TopLoggerPhpSdk\Requests\Gym\ListGymsRequest;
+use RubenVanErk\TopLoggerPhpSdk\Requests\Gym\ListRankedUsersRequest;
+use RubenVanErk\TopLoggerPhpSdk\Requests\User\GetUserStatsRequest;
 
 class TopLoggerService
 {
-    private TopLogger $topLogger;
-
-    public function __construct()
-    {
-        $this->topLogger = new TopLogger();
-    }
-
     /**
      * @return Collection<Gym>
      */
     public function getGyms(): Collection
     {
-        $gyms = Cache::rememberForever(
+        return Cache::rememberForever(
             'gym_resources',
-            fn () => $this->topLogger->gyms()->filter(['live' => true])->include(['gym_resources'])->all()
+            fn() => collect((new ListGymsRequest())->send()->dto())
         );
-
-        return collect($gyms)
-            ->map(fn ($object) => new Gym((array) $object))
-            ->values();
     }
 
     /**
@@ -41,47 +33,42 @@ class TopLoggerService
      */
     public function getRankedUsersByGym(int $gymId): Collection
     {
-        $rankedAthletes = $this->topLogger->gyms()
-            ->rankedAthletes($gymId)
-            ->param([
-                'climbs_type' => 'boulders',
-                'ranking_type' => 'grade',
-            ])
-            ->get();
-
-        return collect($rankedAthletes)
-            ->map(fn ($object) => new User((array) $object))
-            ->values();
+        $request = new ListRankedUsersRequest($gymId);
+        $request->setQuery(['climbs_type' => 'boulders', 'ranking_type' => 'grade']);
+        return collect($request->send()->dto());
     }
 
     public function getUserStats(User $user): UserStats
     {
-        $userStats = Cache::rememberForever(
+        return Cache::rememberForever(
             'stats'.$user->id,
-            fn () => $this->topLogger->users()->stats($user->id)
+            function () use ($user) {
+                $request = new GetUserStatsRequest($user->id);
+                return $request->send()->dto();
+            }
         );
-
-        return new UserStats((array) $userStats);
     }
 
     public function getAscends(User $user): Collection
     {
         $ascends = Cache::rememberForever(
             'ascends'.$user->id,
-            fn () => $this->topLogger->ascends()
-                ->filter(['used' => true])
-                ->filter(['user' => ['uid' => $user->uid]])
-                ->param(['serialize_checks' => true])
-                ->include(['climb'])
-                ->get()
+            function () use ($user) {
+                $request = new ListAscends($user->uid);
+
+                $request->addFilter('used', true);
+                $request->addQuery('serialize_checks', true);
+                $request->addInclude('climb');
+
+                return $request->send()->dto();
+            }
         );
 
         $user->stats->sessionCount = collect($ascends)
-            ->unique(fn ($ascend) => (new Carbon($ascend->date_logged))->format('Y-m-d'))
+            ->filter(fn (Ascend $ascend) => !empty($ascend->dateLogged))
+            ->unique(fn ($ascend) => (new Carbon($ascend->dateLogged))->format('Y-m-d'))
             ->count();
 
-        return collect($ascends)
-            ->map(fn ($object) => new Ascend((array) $object))
-            ->values();
+        return collect($ascends);
     }
 }

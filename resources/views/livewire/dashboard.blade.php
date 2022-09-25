@@ -1,6 +1,6 @@
 <div>
-    @if($users->isEmpty() || $addUser)
-        @if ($users->isNotEmpty())
+    @if(!$userIds || $addUser)
+        @if ($userIds)
             <x-button wire:click="$set('addUser', false)">
                 Cancel
             </x-button>
@@ -12,6 +12,6 @@
             Add user
         </x-button>
 
-        <x-stats :users="$users"/>
+        <x-stats :user-ids="$userIds"/>
     @endif
 </div>

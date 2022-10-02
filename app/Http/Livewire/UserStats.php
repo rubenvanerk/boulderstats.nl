@@ -4,6 +4,7 @@ namespace App\Http\Livewire;
 
 use App\Services\TopLoggerService;
 use Livewire\Component;
+use RubenVanErk\TopLoggerPhpSdk\Classes\GradeConverter;
 use RubenVanErk\TopLoggerPhpSdk\Requests\User\GetUserRequest;
 
 class UserStats extends Component
@@ -12,20 +13,20 @@ class UserStats extends Component
 
     public int $userId;
 
-    private TopLoggerService $topLoggerService;
+    public string $gradeFont60d = '';
+    public int $gradeProgression60d = 0;
 
-    public function boot()
-    {
-        $this->topLoggerService = new TopLoggerService();
-    }
-
-    public function render()
+    public function render(TopLoggerService $topLoggerService)
     {
         $user = (new GetUserRequest($this->userId))->send()->dto();
 
         if ($this->readyToLoad) {
-            $user->stats = $this->topLoggerService->getUserStats($user);
-            $user->ascends = $this->topLoggerService->getAscends($user);
+            $user->stats = $topLoggerService->getUserStats($user);
+            $user->ascends = $topLoggerService->getAscends($user);
+
+            $gradeConverter = GradeConverter::fromGrade($user->stats->grade);
+            $this->gradeFont60d = $gradeConverter->toFont();
+            $this->gradeProgression60d = $gradeConverter->getProgress();
         }
 
         return view('livewire.user-stats', compact('user'));

@@ -3,6 +3,8 @@
 namespace App\Http\Livewire;
 
 use App\Services\TopLoggerService;
+use Illuminate\Contracts\View\View;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Session;
 use Livewire\Component;
 
@@ -18,6 +20,7 @@ class Dashboard extends Component
 
     protected $listeners = [
         'userAdded' => 'updateUsers',
+        'userRemoved' => 'updateUsers',
     ];
 
     public function boot(): void
@@ -30,7 +33,7 @@ class Dashboard extends Component
         $this->updateUsers();
     }
 
-    public function render()
+    public function render(): View
     {
         return view('livewire.dashboard');
     }
@@ -39,5 +42,13 @@ class Dashboard extends Component
     {
         $this->userIds = Session::get('userIds', []);
         $this->addUser = false;
+    }
+
+    public function refresh()
+    {
+        foreach ($this->userIds as $userId) {
+            Cache::forget('ascends'.$userId);
+            Cache::forget('stats'.$userId);
+        }
     }
 }

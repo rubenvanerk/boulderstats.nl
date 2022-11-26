@@ -12,6 +12,10 @@
             Add user
         </x-button>
 
+        <x-button wire:click="refresh">
+            Refresh
+        </x-button>
+
         <x-stats :user-ids="$userIds"/>
     @endif
 </div>

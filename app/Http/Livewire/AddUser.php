@@ -3,6 +3,7 @@
 namespace App\Http\Livewire;
 
 use App\Services\TopLoggerService;
+use Illuminate\Contracts\View\View;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Session;
 use Livewire\Component;
@@ -36,7 +37,7 @@ class AddUser extends Component
             ->values();
     }
 
-    public function render()
+    public function render(): View
     {
         return view('livewire.add-user');
     }

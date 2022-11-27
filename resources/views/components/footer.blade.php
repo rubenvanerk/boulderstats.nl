@@ -11,6 +11,10 @@
             </p>
         </div>
         <div class="flex justify-center space-x-6">
+            <a href="https://wrve.notion.site/3c591dd1f75e4a3dbd887f57cff66362?v=db3c056d32604408aa1f4e48495fe9d1" target="_blank"
+               class="text-gray-500 hover:text-gray-600 hover:underline decoration-primary-500">
+                Roadmap
+            </a>
             <a href="https://plausible.wrve.nl/boulderstats.nl" target="_blank"
                class="text-gray-500 hover:text-gray-600 hover:underline decoration-primary-500">
                 User statistics

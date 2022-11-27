@@ -15,6 +15,7 @@
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     @livewireStyles
 
+    <script defer data-domain="boulderstats.nl" src="https://plausible.wrve.nl/js/plausible.js"></script>
 </head>
 
 <body class="font-sans antialiased h-full">
@@ -41,6 +42,7 @@
     </div>
 </div>
 
+<x-footer/>
 
 @livewireScripts
 </body>

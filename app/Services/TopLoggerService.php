@@ -58,7 +58,6 @@ class TopLoggerService
 
                 $request->addFilter('used', true);
                 $request->addQuery('serialize_checks', true);
-                $request->addInclude('climb');
 
                 return $request->send()->dto();
             }

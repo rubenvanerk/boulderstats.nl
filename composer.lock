@@ -3633,12 +3633,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/rubenvanerk/toplogger-php-sdk.git",
-                "reference": "0172a48fbcb90ea85ce36614e27bc2a98f307c09"
+                "reference": "32f6411de65eaaa98d616ac0aa8ff3a35c90cdbc"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/rubenvanerk/toplogger-php-sdk/zipball/0172a48fbcb90ea85ce36614e27bc2a98f307c09",
-                "reference": "0172a48fbcb90ea85ce36614e27bc2a98f307c09",
+                "url": "https://api.github.com/repos/rubenvanerk/toplogger-php-sdk/zipball/32f6411de65eaaa98d616ac0aa8ff3a35c90cdbc",
+                "reference": "32f6411de65eaaa98d616ac0aa8ff3a35c90cdbc",
                 "shasum": ""
             },
             "require": {
@@ -3677,7 +3677,7 @@
                 "source": "https://github.com/rubenvanerk/toplogger-php-sdk/tree/main",
                 "issues": "https://github.com/rubenvanerk/toplogger-php-sdk/issues"
             },
-            "time": "2022-11-27T15:30:37+00:00"
+            "time": "2022-11-27T15:32:54+00:00"
         },
         {
             "name": "sammyjo20/saloon",

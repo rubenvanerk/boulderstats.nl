@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "3437a45d0ac8b259930a8c44944cf5ed",
+    "content-hash": "672224e70fe11cdb8e6a01587807320a",
     "packages": [
         {
             "name": "barryvdh/laravel-debugbar",
@@ -1684,16 +1684,16 @@
         },
         {
             "name": "league/flysystem",
-            "version": "3.10.3",
+            "version": "3.10.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/thephpleague/flysystem.git",
-                "reference": "8013fb046c6a244b2b1b75cc95d732ed6bcdeb8a"
+                "reference": "a7790f3dd1b27af81d380e6b2afa77c16ab7e181"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/thephpleague/flysystem/zipball/8013fb046c6a244b2b1b75cc95d732ed6bcdeb8a",
-                "reference": "8013fb046c6a244b2b1b75cc95d732ed6bcdeb8a",
+                "url": "https://api.github.com/repos/thephpleague/flysystem/zipball/a7790f3dd1b27af81d380e6b2afa77c16ab7e181",
+                "reference": "a7790f3dd1b27af81d380e6b2afa77c16ab7e181",
                 "shasum": ""
             },
             "require": {
@@ -1755,7 +1755,7 @@
             ],
             "support": {
                 "issues": "https://github.com/thephpleague/flysystem/issues",
-                "source": "https://github.com/thephpleague/flysystem/tree/3.10.3"
+                "source": "https://github.com/thephpleague/flysystem/tree/3.10.4"
             },
             "funding": [
                 {
@@ -1771,7 +1771,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2022-11-14T10:42:43+00:00"
+            "time": "2022-11-26T19:48:01+00:00"
         },
         {
             "name": "league/mime-type-detection",
@@ -3629,16 +3629,21 @@
         },
         {
             "name": "rubenvanerk/toplogger-php-sdk",
-            "version": "dev-saloon",
+            "version": "dev-main",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/rubenvanerk/toplogger-php-sdk.git",
+                "reference": "655edc838e908a88e3f9ec66247195117578c2eb"
+            },
             "dist": {
-                "type": "path",
-                "url": "../toplogger-php-sdk",
-                "reference": "61e51a147e3d35d4cf19c3e5bd92091d8719a884"
+                "type": "zip",
+                "url": "https://api.github.com/repos/rubenvanerk/toplogger-php-sdk/zipball/655edc838e908a88e3f9ec66247195117578c2eb",
+                "reference": "655edc838e908a88e3f9ec66247195117578c2eb",
+                "shasum": ""
             },
             "require": {
                 "illuminate/collections": "^9.0",
                 "illuminate/support": "^9.0",
-                "larabug/larabug": "^2.5",
                 "php": "^8.1",
                 "sammyjo20/saloon": "^1.4",
                 "spatie/data-transfer-object": "^3.8"
@@ -3646,6 +3651,7 @@
             "require-dev": {
                 "pestphp/pest": "^1.21"
             },
+            "default-branch": true,
             "type": "library",
             "autoload": {
                 "psr-4": {
@@ -3667,10 +3673,11 @@
                 }
             ],
             "description": "PHP SDK for the TopLogger API",
-            "transport-options": {
-                "symlink": true,
-                "relative": true
-            }
+            "support": {
+                "source": "https://github.com/rubenvanerk/toplogger-php-sdk/tree/main",
+                "issues": "https://github.com/rubenvanerk/toplogger-php-sdk/issues"
+            },
+            "time": "2022-11-27T13:05:26+00:00"
         },
         {
             "name": "sammyjo20/saloon",

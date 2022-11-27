@@ -9,7 +9,7 @@
         "laravel/tinker": "^2.7",
         "livewire/livewire": "^2.10",
         "php-http/curl-client": "^2.2",
-        "rubenvanerk/toplogger-php-sdk": "dev-saloon",
+        "rubenvanerk/toplogger-php-sdk": "dev-main",
         "spatie/data-transfer-object": "^3.8",
         "spatie/laravel-google-fonts": "^1.2",
         "spatie/laravel-ray": "^1.31"
@@ -69,11 +69,8 @@
     "prefer-stable": true,
     "repositories": [
         {
-            "type": "path",
-            "url": "../toplogger-php-sdk",
-            "options": {
-                "symlink": true
-            }
+            "type": "vcs",
+            "url": "https://github.com/rubenvanerk/toplogger-php-sdk.git"
         }
     ]
 }

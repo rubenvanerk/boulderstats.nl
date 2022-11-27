@@ -40,6 +40,10 @@
         </dl>
 
         @if($readyToLoad)
+            <div>
+                <h2 class="text-gray-700 font-semibold text-lg text-center">Top 10 <sup class="text-xs text-gray-500 font-normal">60d</sup></h2>
+            </div>
+
             <div class="flex flex-col space-y-1 w-40">
                 @foreach($user->stats->topTen as $ascend)
                     <li class="relative col-span-1 flex shadow-sm rounded-md border border-gray-200 ">

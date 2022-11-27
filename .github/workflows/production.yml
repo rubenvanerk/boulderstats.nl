@@ -1,0 +1,35 @@
+name: Deploy to production environment
+
+on:
+  push:
+    branches: [ main ]
+
+jobs:
+  deploy:
+    environment:
+      name: production
+      url: boulderstats.nl
+    runs-on: ubuntu-latest
+    steps:
+      -   name: Deploy
+          uses: appleboy/ssh-action@master
+          env:
+            SHA: ${{ github.sha }}
+          with:
+            host: ${{ secrets.host }}
+            username: ${{ secrets.username }}
+            password: ${{ secrets.password }}
+            port: ${{ secrets.port }}
+            envs: SHA
+            script: |
+              cd public_html/
+              php artisan down --env=staging
+              git fetch --all
+              git checkout --force $SHA
+              composer install --no-ansi --no-dev --no-interaction --no-progress --optimize-autoloader
+              php artisan cache:clear
+              php artisan config:cache
+              php artisan route:cache
+              php artisan view:cache
+              php artisan up
+              composer clear-cache

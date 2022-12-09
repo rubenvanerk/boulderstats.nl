@@ -4,6 +4,7 @@ namespace App\Http\Livewire;
 
 use App\Services\TopLoggerService;
 use App\Services\UserHandler;
+use Carbon\Carbon;
 use Illuminate\Contracts\View\View;
 use Illuminate\Support\Facades\Session;
 use Livewire\Component;
@@ -22,17 +23,21 @@ class UserStats extends Component
     public function render(TopLoggerService $topLoggerService): View
     {
         $user = (new GetUserRequest($this->userId))->send()->dto();
+        $lastSession = null;
 
         if ($this->readyToLoad) {
             $user->stats = $topLoggerService->getUserStats($user);
             $user->ascends = $topLoggerService->getAscends($user);
+
+            $lastLogAt = new Carbon($user->ascends->max('dateLogged'));
+//            $lastSession = $user->ascends->filter(fn($ascend) => (new Carbon($ascend->dateLogged))->isSameDay($lastLogAt));
 
             $gradeConverter = GradeConverter::fromGrade($user->stats->grade);
             $this->gradeFont60d = $gradeConverter->toFont();
             $this->gradeProgression60d = $gradeConverter->getProgress();
         }
 
-        return view('livewire.user-stats', compact('user'));
+        return view('livewire.user-stats', compact('user', 'lastSession'));
     }
 
     public function loadStats(): void

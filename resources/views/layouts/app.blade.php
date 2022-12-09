@@ -19,7 +19,7 @@
 </head>
 
 <body class="font-sans antialiased h-full">
-<div class="min-h-full">
+<div class="min-h-full bg-gray-100">
 
     <x-nav/>
 

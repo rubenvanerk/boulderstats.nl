@@ -5,7 +5,7 @@
     </div>
 
     <div class="w-full space-y-5">
-        <dl class="rounded-lg bg-gray-50 shadow">
+        <dl class="rounded-lg bg-white shadow">
             <div class="flex flex-col border-b border-gray-100 p-6 text-center">
                 <dt class="order-2 mt-1 tracking-wide text-sm font-medium text-gray-500">60d grade</dt>
                 <dd class="order-1 text-3xl font-bold tracking-tight text-primary-600" wire:loading.class="animate-pulse">

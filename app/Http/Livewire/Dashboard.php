@@ -3,6 +3,7 @@
 namespace App\Http\Livewire;
 
 use App\Services\TopLoggerService;
+use App\Services\UserHandler;
 use Illuminate\Contracts\View\View;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Session;
@@ -16,6 +17,8 @@ class Dashboard extends Component
 
     protected TopLoggerService $topLoggerService;
 
+    protected UserHandler $userHandler;
+
     public bool $addUser = false;
 
     protected $listeners = [
@@ -26,6 +29,7 @@ class Dashboard extends Component
     public function boot(): void
     {
         $this->topLoggerService = new TopLoggerService();
+        $this->userHandler = new UserHandler();
     }
 
     public function mount(): void
@@ -40,7 +44,7 @@ class Dashboard extends Component
 
     public function updateUsers(): void
     {
-        $this->userIds = Session::get('userIds', []);
+        $this->userIds = $this->userHandler->getUsers();
         $this->addUser = false;
     }
 

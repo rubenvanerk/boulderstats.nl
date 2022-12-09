@@ -3,14 +3,12 @@
 namespace App\Http\Livewire;
 
 use App\Services\TopLoggerService;
+use App\Services\UserHandler;
 use Illuminate\Contracts\View\View;
 use Illuminate\Support\Collection;
-use Illuminate\Support\Facades\Session;
 use Livewire\Component;
 use RubenVanErk\TopLoggerPhpSdk\Data\Gym;
 use RubenVanErk\TopLoggerPhpSdk\Data\User;
-use RubenVanErk\TopLoggerPhpSdk\Requests\Gym\ListGymsRequest;
-use RubenVanErk\TopLoggerPhpSdk\Requests\Gym\ListRankedUsersRequest;
 
 class AddUser extends Component
 {
@@ -50,14 +48,9 @@ class AddUser extends Component
             ->values();
     }
 
-    public function submit(): void
+    public function submit(UserHandler $userHandler): void
     {
-        $users = Session::get('userIds', []);
-        if (!in_array($this->userId, $users, true)) {
-            $users[] = $this->userId;
-        }
-        Session::put('userIds', $users);
-
+        $userHandler->addUser($this->userId);
         $this->emit('userAdded');
     }
 

@@ -3,6 +3,7 @@
 namespace App\Http\Livewire;
 
 use App\Services\TopLoggerService;
+use App\Services\UserHandler;
 use Illuminate\Contracts\View\View;
 use Illuminate\Support\Facades\Session;
 use Livewire\Component;
@@ -41,9 +42,7 @@ class UserStats extends Component
 
     public function remove()
     {
-        $users = Session::get('userIds', []);
-        $users = collect($users)->filter(fn($userId) => $userId != $this->userId)->toArray();
-        Session::put('userIds', $users);
+        app(UserHandler::class)->removeUser($this->userId);
 
         $this->emit('userRemoved', $this->userId);
     }

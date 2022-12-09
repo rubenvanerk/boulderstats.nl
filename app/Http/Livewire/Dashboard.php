@@ -6,7 +6,6 @@ use App\Services\TopLoggerService;
 use App\Services\UserHandler;
 use Illuminate\Contracts\View\View;
 use Illuminate\Support\Facades\Cache;
-use Illuminate\Support\Facades\Session;
 use Livewire\Component;
 
 class Dashboard extends Component

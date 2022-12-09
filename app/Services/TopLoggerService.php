@@ -23,7 +23,7 @@ class TopLoggerService
     {
         return Cache::rememberForever(
             'gym_resources',
-            fn() => collect((new ListGymsRequest())->send()->dto())
+            fn () => collect((new ListGymsRequest())->send()->dto())
         );
     }
 
@@ -35,6 +35,7 @@ class TopLoggerService
     {
         $request = new ListRankedUsersRequest($gymId);
         $request->setQuery(['climbs_type' => 'boulders', 'ranking_type' => 'grade']);
+
         return collect($request->send()->dto());
     }
 
@@ -44,6 +45,7 @@ class TopLoggerService
             'stats'.$user->id,
             function () use ($user) {
                 $request = new GetUserStatsRequest($user->id);
+
                 return $request->send()->dto();
             }
         );
@@ -64,7 +66,7 @@ class TopLoggerService
         );
 
         $user->stats->sessionCount = collect($ascends)
-            ->filter(fn (Ascend $ascend) => !empty($ascend->dateLogged))
+            ->filter(fn (Ascend $ascend) => ! empty($ascend->dateLogged))
             ->unique(fn ($ascend) => (new Carbon($ascend->dateLogged))->format('Y-m-d'))
             ->count();
 

@@ -4,9 +4,7 @@ namespace App\Http\Livewire;
 
 use App\Services\TopLoggerService;
 use App\Services\UserHandler;
-use Carbon\Carbon;
 use Illuminate\Contracts\View\View;
-use Illuminate\Support\Facades\Session;
 use Livewire\Component;
 use RubenVanErk\TopLoggerPhpSdk\Classes\GradeConverter;
 use RubenVanErk\TopLoggerPhpSdk\Requests\User\GetUserRequest;
@@ -18,6 +16,7 @@ class UserStats extends Component
     public int $userId;
 
     public string $gradeFont60d = '';
+
     public int $gradeProgression60d = 0;
 
     public function render(TopLoggerService $topLoggerService): View
@@ -29,7 +28,7 @@ class UserStats extends Component
             $user->stats = $topLoggerService->getUserStats($user);
             $user->ascends = $topLoggerService->getAscends($user);
 
-            $lastLogAt = new Carbon($user->ascends->max('dateLogged'));
+//            $lastLogAt = new Carbon($user->ascends->max('dateLogged'));
 //            $lastSession = $user->ascends->filter(fn($ascend) => (new Carbon($ascend->dateLogged))->isSameDay($lastLogAt));
 
             $gradeConverter = GradeConverter::fromGrade($user->stats->grade);

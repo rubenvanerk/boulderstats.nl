@@ -58,12 +58,14 @@ class AddUser extends Component
     {
         $this->gyms = $this->gyms->map(function (array $gym): Gym {
             $gym['id_name'] = $gym['idName'];
+
             return new Gym($gym);
         });
 
         if (isset($this->users)) {
             $this->users = $this->users->map(function (array $user): User {
                 $user['full_name'] = $user['fullName'];
+
                 return new User($user);
             });
         }

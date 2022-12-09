@@ -14,16 +14,16 @@ class UserHandler
     public function addUser(int $userId): void
     {
         $users = $this->getUsers();
-        if (!in_array($userId, $users, true)) {
+        if (! in_array($userId, $users, true)) {
             $users[] = $userId;
         }
-        Cookie::queue('userIds', serialize($users));
+        Cookie::queue('userIds', serialize($users), 60 * 24 * 365);
     }
 
     public function removeUser(int $userId): void
     {
         $users = $this->getUsers();
         $users = array_diff($users, [$userId]);
-        Cookie::queue('userIds', serialize($users));
+        Cookie::queue('userIds', serialize($users), 60 * 24 * 365);
     }
 }
